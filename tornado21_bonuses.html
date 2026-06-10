@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Tornado 21 — Bonuses</title>
+<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAABD0lEQVR42rWV0Q3DIAxEjygbOTPZM9kzxTPRj0JLMEmJlCLxQQTHs33ByFkzgEdnzppTWSBnxRMjJQEALE+KtloL/jTWQwg03kSTYvuuUbiGkDYBd0pMgHlcMwFiABHCmVSqePy4yTQpEaCqoYDrsAC7Hi5oaVpa8yh6SXxG710UygCxDi330xWV3gstlal8zPtt4p4cE9RTxD15LVilFgNEJOy/FHYDJEkQNwfc36LK47OXwiYCYoaJB1+3xFPCLWEtWriwIR75OAhLehO24uQeClh9rXzu45gK959+bt2wlVxsXU4+drMLU4oZCN83wcGne5kJKcncn8d0HvLZY7/e8e+dsbTt5MnWhH810xcp7bbuPGM/FQAAAABJRU5ErkJggg==">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  background: #2a2a2a;
+  font-family: "Trebuchet MS", Tahoma, sans-serif;
+  color: #1a1a10;
+}
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px 0;
+}
+
+#stage {
+  width: 820px;
+  background: #f4eec0;          /* lighter cream — same family as game olive, but parchment-bright */
+  border: 2px solid #484830;
+  border-radius: 6px;
+  padding: 18px 28px 22px;
+  box-shadow: 0 0 40px rgba(0,0,0,.6);
+}
+
+h1 {
+  font: bold 20px Tahoma;
+  text-align: center;
+  margin-bottom: 14px;
+  color: #2a2a1a;
+}
+
+h2 {
+  font: bold 12px Tahoma;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  color: #6a5a20;
+  margin: 14px 0 4px;
+  padding-bottom: 3px;
+  border-bottom: 1px solid #c9bf78;
+}
+h2:first-of-type { margin-top: 2px; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font: 12px Tahoma;
+}
+td {
+  padding: 4px 8px;
+  vertical-align: middle;
+}
+tr + tr td { border-top: 1px dotted rgba(72,72,48,.28); }
+
+.name    { font: bold 12px Tahoma; white-space: nowrap; width: 140px; color: #2a2a1a; }
+.pattern { color: #2a2a1a; }
+.effect  { color: #6a5300; font-style: italic; white-space: nowrap; text-align: right; }
+.pts {
+  text-align: right;
+  font: bold 14px Tahoma;
+  white-space: nowrap;
+  width: 56px;
+  color: #000;
+}
+
+ol {
+  padding-left: 22px;
+  font: 12.5px Tahoma;
+  line-height: 1.65;
+  color: #1a1a10;
+}
+ol li + li { margin-top: 2px; }
+
+.notes {
+  font: italic 11px Tahoma;
+  color: #6a6a4a;
+  margin-top: 6px;
+  line-height: 1.55;
+}
+
+b { font-weight: bold; }
+</style>
+</head>
+<body>
+
+<div id="stage">
+
+  <h1>Tornado 21 — Bonuses &amp; Special Rules</h1>
+
+  <h2>Clear Bonuses</h2>
+  <table>
+    <tr><td class="name">21 Large</td>          <td class="pattern">Five cards totaling 21</td>                              <td class="effect">+1 gold</td>  <td class="pts">65</td></tr>
+    <tr><td class="name">Triple 7's Jackpot</td><td class="pattern">7&middot;7&middot;7 (third may be Joker)</td>            <td class="effect">+1 gold</td>  <td class="pts">65</td></tr>
+    <tr><td class="name">21 Straight</td>       <td class="pattern">6&middot;7&middot;8 or 8&middot;7&middot;6</td>         <td class="effect">+1 gold</td>  <td class="pts">30</td></tr>
+    <tr><td class="name">Big Straight</td>      <td class="pattern">Q&middot;K&middot;A</td>                                  <td class="effect">+1 gold</td>  <td class="pts">30</td></tr>
+    <tr><td class="name">Little Straight</td>   <td class="pattern">A-2-3-4-5 or 2-3-4-5-6 (any order)</td>                  <td class="effect">+1 gold</td>  <td class="pts">65</td></tr>
+    <tr><td class="name">911 Emergency</td>     <td class="pattern">9&middot;A&middot;A (third may be Joker)</td>            <td class="effect">+1 gold</td>  <td class="pts">65</td></tr>
+    <tr><td class="name">5 of a Kind</td>       <td class="pattern">Five A's, 2's, 3's, 4's or 5's (fifth may be Joker)</td> <td class="effect">+1 gold</td>  <td class="pts">65</td></tr>
+    <tr><td class="name">Double Jokers</td>     <td class="pattern">Exactly 2 Jokers in the column</td>                      <td class="effect">+3 golds</td> <td class="pts">350</td></tr>
+  </table>
+
+  <h2>Board-State Bonuses</h2>
+  <table>
+    <tr><td class="name">Deck Cleared</td>     <td class="pattern">Play every card in the deck</td>                  <td class="effect">+1 gold &middot; deck refills</td>             <td class="pts">65</td></tr>
+    <tr><td class="name">Cleared Board</td>    <td class="pattern">Clear all 5 columns in only 5 plays</td>          <td class="effect">+3 golds</td>                                  <td class="pts">65</td></tr>
+    <tr><td class="name">Lesser Straight</td>  <td class="pattern">Column totals 16, 17, 18, 19, 20 (any order)</td> <td class="effect">+1 gold &middot; adds 5 spade golds (A&ndash;5)</td>  <td class="pts">30</td></tr>
+    <tr><td class="name">Greater Straight</td> <td class="pattern">Column totals 16, 17, 18, 19, 20 (in order)</td>  <td class="effect">+1 gold &middot; adds 5 spade golds (A&ndash;5)</td>  <td class="pts">65</td></tr>
+  </table>
+
+  <h2>Meta Bonus</h2>
+  <table>
+    <tr><td class="name">All Golden</td><td class="pattern">Any clear-bonus using <b>only gold cards</b></td><td class="effect">multiplies bonus points by gold count</td><td class="pts">&times;N</td></tr>
+  </table>
+
+  <h2>Gold Cards</h2>
+  <ol>
+    <li>Each gold card in a cleared column <b>doubles</b> that column's score (multiplicative per gold).</li>
+    <li>Each gold card in a cleared column also <b>opens a gap</b> in the scorebox &mdash; the next column you clear lands there and doubles its score (cumulative across gaps).</li>
+  </ol>
+
+  <h2>Playing a Joker</h2>
+  <ol>
+    <li>If the column's sum is <b>9 or less</b>, the Joker fills the column to <b>11</b> (a soft total that can also be read as 21).</li>
+    <li>If the column's sum is <b>10 or more</b>, the Joker <b>clears the column outright</b>.</li>
+  </ol>
+
+  <h2>Joker Generation</h2>
+  <ol>
+    <li><b>Same-column streak.</b> Clear the same column 4 or more times in a row (one joker per clear from the 4th onward).</li>
+    <li><b>Gold pile-up.</b> Play any card on a column that already contains 3 or more gold cards.</li>
+    <li><b>Golden clear bonus.</b> Earn any clear-bonus with 2 or more gold cards in the cleared column &mdash; <i>except</i> Triple 7's and Double Jokers, which never trigger this rule.</li>
+    <li><b>Spade trick.</b> Play A, 2, 3 or 4 of Spades when exactly 1, 14, 27 or 40 cards remain in the deck.</li>
+  </ol>
+  <div class="notes">
+    Only one joker is added per play, even if more than one rule triggers at the same time.
+    Other rewards on the same play are not affected: a clear that also completes a Lesser or Greater Straight will still add the 5 spade gold cards on top of the joker.
+  </div>
+
+</div>
+
+</body>
+</html>

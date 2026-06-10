@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Tornado 21 — Goldrush</title>
+<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAABD0lEQVR42rWV0Q3DIAxEjygbOTPZM9kzxTPRj0JLMEmJlCLxQQTHs33ByFkzgEdnzppTWSBnxRMjJQEALE+KtloL/jTWQwg03kSTYvuuUbiGkDYBd0pMgHlcMwFiABHCmVSqePy4yTQpEaCqoYDrsAC7Hi5oaVpa8yh6SXxG710UygCxDi330xWV3gstlal8zPtt4p4cE9RTxD15LVilFgNEJOy/FHYDJEkQNwfc36LK47OXwiYCYoaJB1+3xFPCLWEtWriwIR75OAhLehO24uQeClh9rXzu45gK959+bt2wlVxsXU4+drMLU4oZCN83wcGne5kJKcncn8d0HvLZY7/e8e+dsbTt5MnWhH810xcp7bbuPGM/FQAAAABJRU5ErkJggg==">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  background: #2a2a2a;
+  font-family: "Trebuchet MS", Tahoma, sans-serif;
+  color: #1a1a10;
+}
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px 0;
+}
+
+#stage {
+  width: 820px;
+  background: #f4eec0;
+  border: 2px solid #484830;
+  border-radius: 6px;
+  padding: 18px 28px 22px;
+  box-shadow: 0 0 40px rgba(0,0,0,.6);
+}
+
+h1 {
+  font: bold 20px Tahoma;
+  text-align: center;
+  margin-bottom: 4px;
+  color: #2a2a1a;
+}
+
+.lede {
+  font: italic 12.5px Tahoma;
+  text-align: center;
+  color: #6a5a20;
+  margin-bottom: 12px;
+}
+
+h2 {
+  font: bold 12px Tahoma;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  color: #6a5a20;
+  margin: 16px 0 4px;
+  padding-bottom: 3px;
+  border-bottom: 1px solid #c9bf78;
+}
+h2:first-of-type { margin-top: 6px; }
+
+h3 {
+  font: bold 12.5px Tahoma;
+  color: #2a2a1a;
+  margin: 10px 0 3px;
+}
+
+p, ol, ul {
+  font: 12.5px Tahoma;
+  line-height: 1.6;
+  color: #1a1a10;
+}
+
+ol, ul { padding-left: 22px; }
+li + li { margin-top: 2px; }
+
+.intro p + p { margin-top: 6px; }
+
+.notes {
+  font: italic 11px Tahoma;
+  color: #6a6a4a;
+  margin-top: 6px;
+  line-height: 1.55;
+}
+
+b { font-weight: bold; }
+em { font-style: italic; }
+
+.stage {
+  margin-top: 4px;
+}
+.stage .summary {
+  margin-top: 4px;
+}
+.stage .why {
+  font: italic 11.5px Tahoma;
+  color: #6a5300;
+  margin: 2px 0 4px;
+}
+
+.case {
+  border-left: 2px solid #c9bf78;
+  padding: 2px 0 2px 10px;
+  margin-top: 8px;
+}
+
+.glossary {
+  background: #ebe3a6;
+  border: 1px solid #c9bf78;
+  border-radius: 4px;
+  padding: 8px 12px;
+  margin: 8px 0 4px;
+  font: 12px Tahoma;
+  line-height: 1.55;
+  color: #1a1a10;
+}
+.glossary b { color: #4a3a00; }
+.glossary .term { font: bold 11px Tahoma; text-transform: uppercase; letter-spacing: 1px; color: #6a5a20; display: block; margin-bottom: 4px; }
+.case .when {
+  font: bold 11.5px Tahoma;
+  color: #6a5a20;
+  text-transform: uppercase;
+  letter-spacing: .8px;
+  display: block;
+  margin-bottom: 2px;
+}
+</style>
+</head>
+<body>
+
+<div id="stage">
+
+  <h1>Tornado 21 — The Goldrush</h1>
+  <div class="lede">A multi-stage technique that turns one Lesser Straight into an unending chain of bonuses.</div>
+
+  <h2>Why it works</h2>
+  <div class="intro">
+    <p>A <b>Lesser Straight</b> (column sums 16, 17, 18, 19, 20) instantly adds 5 spade gold cards (A&ndash;5) to the deck and opens 5 scorebox gaps. Instead of clearing the board with them, a goldrush <b>piles them into a single column</b>: that column doubles per gold, the gaps double the next clears, and you earn the <b>All Golden</b> multiplier on the resulting bonus. Each rebuilt lesser adds more golds and more gaps — the loop snowballs.</p>
+    <p>The goal of the setup is a very specific lesser: one with a <b>soft 20</b> <em>and</em> a <b>soft gold 16</b>. Once you reach that state, the goldrush loop (Stage&nbsp;3) runs almost mechanically.</p>
+  </div>
+
+  <div class="glossary">
+    <span class="term">Soft vs. hard &mdash; what makes the goldrush possible</span>
+    A column is <b>soft</b> while it contains an Ace and its low total is 11 or less. The Ace counts as either <b>1 or 11</b>, so a soft column reads as two numbers (e.g. <b>&ldquo;10 or 20&rdquo;</b> for a soft 20, <b>&ldquo;6 or 16&rdquo;</b> for a soft 16). The moment another card pushes the low total past 11, the Ace locks to 1 and the column becomes <b>hard</b>.<br><br>
+    Why it matters: a <b>hard 20</b> is dead weight &mdash; the only card it can accept without busting is an Ace. A <b>soft 20</b> is dual-use: it counts as 21 for clearing purposes, <em>but</em> you can also play onto it (using the low &ldquo;10&rdquo; reading). For example, playing a <b>5</b> onto a 4-card soft 20 makes the column read 15 and become hard &mdash; but it now holds 5 cards, and a full column clears regardless of total. The goldrush loop depends on this constantly: soft columns get cleared, reused, and rebuilt without you ever needing to land exactly on 21.<br><br>
+    A <b>gold</b> soft column is the same thing built (partly or entirely) from gold cards. Two things change compared to a white soft column: (1) its eventual clear scores doubled per gold, and (2) it feeds the joker engine &mdash; any clear-bonus on a column with <b>2 or more gold cards</b> spawns a joker (except Triple 7&rsquo;s and Double Jokers), and playing onto a column that already holds <b>3 or more golds</b> also spawns one. The goldrush loop relies on those jokers showing up exactly when the routine calls for them.
+  </div>
+
+  <h2>Stage 1 &mdash; Lesser Straight with a hard 20 &rarr; build a soft 20</h2>
+  <div class="stage">
+    <div class="why">You&rsquo;ve hit a Lesser Straight (column totals 16/17/18/19/20), but your 20 is <b>hard</b> &mdash; no Ace, so it can&rsquo;t be played onto. You need to replace it with a <b>soft 20</b> before continuing. Skip this stage if your 20 is already soft.</div>
+    <p>The lesser awards 5+4+3+2+Ace. You need a free column to pile 4+3+2+Ace and you need to dispose of the 5 first.</p>
+    <ol class="summary">
+      <li>Play the <b>5 on the 16</b> (clears it).</li>
+      <li>Pile <b>4+3+2+Ace</b> into the freed column.</li>
+      <li>While piling, jokers will arrive — park <b>every joker on the column holding the old 20</b>, clearing it. The new soft 20 is being built in the pile.</li>
+      <li>Rebuild the lesser (you need a new 16) <b>without touching the new soft 20</b>. Often fails; retry.</li>
+    </ol>
+    <div class="notes">Most goldrushers avoid Stage 1 by building the soft 20 <em>before</em> the lesser, so they only have to rebuild the lesser once (in Stage 2). A soft <em>white</em> 20 on the first lesser is the ideal start.</div>
+  </div>
+
+  <h2>Stage 2 &mdash; Lesser Straight with a soft 20 &rarr; build a soft gold 16</h2>
+  <div class="stage">
+    <div class="why">You have a Lesser Straight (16/17/18/19/20) with a <b>soft 20</b> (gold or white &mdash; either works). Now turn the 16 into a <b>soft gold 16</b> built from the incoming 3+2+Ace.</div>
+    <ol class="summary">
+      <li>Play the <b>5 on the 16</b> (clears it). The soft 20 stays put — never sacrifice it.</li>
+      <li>Play the <b>4 on the 17</b>. You now have two free columns.</li>
+      <li>Stack <b>3+2+Ace</b> in one free column (your new soft gold 16).</li>
+      <li>Park every joker that arrives in the <b>other</b> free column.</li>
+      <li>Rebuild the lesser (a new 17) <b>without touching the 16 or 20</b>. If forced, sacrifice the 16 and redo Stage 2 only.</li>
+    </ol>
+    <div class="notes">When this succeeds you have the goldrush lesser: soft 20 + soft gold 16. Proceed to Stage 3.</div>
+  </div>
+
+  <h2>Stage 3 &mdash; Goldrushing</h2>
+  <div class="stage">
+    <div class="why">Loop a fresh lesser out of the current one every cycle, harvesting golds and gaps each pass.</div>
+    <p>Which sub-routine to run depends on the composition of your soft 20:</p>
+
+    <div class="case">
+      <span class="when">Case 1 &mdash; 4-card gold soft 20</span>
+      <span class="notes" style="display:block;margin-bottom:4px">You arrive here from Stage 1, or after looping from any other case.</span>
+      <ul>
+        <li><b>5</b> onto the soft 20 &rarr; 5-card clear &rarr; joker.</li>
+        <li><b>Joker</b> into the freshly cleared column.</li>
+        <li><b>4</b> onto the 16 &rarr; new soft 20 &rarr; joker.</li>
+        <li><b>Joker</b> onto the parked joker &rarr; clears.</li>
+        <li>Stack <b>3+2+Ace</b> in the cleared column.</li>
+      </ul>
+      <div class="notes">Result: a fresh goldrush lesser. Repeat until you receive an unexpected joker &mdash; the <em>Extra Joker</em> &mdash; which breaks the loop.</div>
+    </div>
+
+    <div class="case">
+      <span class="when">Case 2 &mdash; Soft white 20 (2–3 white cards)</span>
+      <ul>
+        <li>Gold <b>5</b> on the 20.</li>
+        <li>Gold <b>4</b> on the gold 16.</li>
+        <li>Clear the resulting <b>15</b> with the joker.</li>
+        <li>Stack <b>3+2+Ace</b> in the empty column.</li>
+        <li>Loop into <b>Case 1</b>.</li>
+      </ul>
+    </div>
+
+    <div class="case">
+      <span class="when">Case 3 &mdash; 2–3 card gold soft 20</span>
+      <ul>
+        <li>Gold <b>5</b> on the soft 20.</li>
+        <li><b>Joker</b> on the gold 15.</li>
+        <li>Next <b>joker</b> into the freshly cleared column.</li>
+        <li>Gold <b>4</b> on the gold 16.</li>
+        <li><b>Joker</b> onto the parked joker.</li>
+        <li>Stack <b>3+2+Ace</b> in the empty column.</li>
+        <li>Loop into <b>Case 1</b>.</li>
+      </ul>
+    </div>
+
+    <div class="case">
+      <span class="when">Case 4 &mdash; Rare: 4-white soft 20 + 2-white soft 16</span>
+      <ul>
+        <li>Gold <b>5</b> on the soft 20 &rarr; clears, no joker comes.</li>
+        <li><b>4</b> on the soft 16.</li>
+        <li>Stack <b>3+2+Ace</b> in the empty column.</li>
+        <li>Loop into <b>Case 2</b>.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Endgame</h2>
+  <div class="intro">
+    <p>The loop ends when an <em>extra joker</em> arrives that none of the routines accounted for. Until then, every cycle adds more golds to the deck and more gaps to the scorebox, doubling the next clears compounding-style. Top scores in the original game reached the tens of millions using this and the related <em>Meta-rush</em> follow-up.</p>
+  </div>
+
+</div>
+
+</body>
+</html>
