@@ -26,7 +26,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <title>Tornado 21</title>
 <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAABD0lEQVR42rWV0Q3DIAxEjygbOTPZM9kzxTPRj0JLMEmJlCLxQQTHs33ByFkzgEdnzppTWSBnxRMjJQEALE+KtloL/jTWQwg03kSTYvuuUbiGkDYBd0pMgHlcMwFiABHCmVSqePy4yTQpEaCqoYDrsAC7Hi5oaVpa8yh6SXxG710UygCxDi330xWV3gstlal8zPtt4p4cE9RTxD15LVilFgNEJOy/FHYDJEkQNwfc36LK47OXwiYCYoaJB1+3xFPCLWEtWriwIR75OAhLehO24uQeClh9rXzu45gK959+bt2wlVxsXU4+drMLU4oZCN83wcGne5kJKcncn8d0HvLZY7/e8e+dsbTt5MnWhH810xcp7bbuPGM/FQAAAABJRU5ErkJggg==">
 <!-- iOS / mobile "Add to Home Screen" support. Icon is the same 22x22 source
@@ -44,14 +44,22 @@
   --ui-font: "Trebuchet MS", Tahoma, sans-serif;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { background: #2a2a2a; font-family: var(--ui-font); color: #000; font-weight: normal; }
+html, body { background: #2a2a2a; font-family: var(--ui-font); color: #000; font-weight: normal; overflow: hidden; height: 100%; }
 h1, h2, h3, h4, h5, h6, b, strong { font-weight: normal; }
-body { margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center; }
+/* dvh + safe-area: keep the scaled stage inside the visible viewport on iOS
+   (where the URL bar shrinks vh) and clear of notches in landscape. */
+body { margin: 0; height: 100dvh; display: flex; align-items: center; justify-content: center;
+       padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); }
 
 #wrap {
   display: flex;
   flex-direction: column;
   box-shadow: 0 0 40px rgba(0,0,0,.6);
+  /* uniform scale-to-fit; --fit-scale is set by fitToViewport() in JS.
+     transform-origin: center pairs with body's flex-center to letterbox cleanly. */
+  transform-origin: center center;
+  transform: scale(var(--fit-scale, 1));
+  flex-shrink: 0;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -921,8 +929,10 @@ function animateCardsToScorebox(rowEntry, rowIdx) {
   // compute the actual on-screen target from the rendered row element
   const rowRect = scoreboxInner.children[rowIdx].getBoundingClientRect();
   const stageRect = stage.getBoundingClientRect();
-  const SB_LEFT = rowRect.left - stageRect.left + 15; // matches .row-cards left
-  const SB_TOP  = rowRect.top  - stageRect.top;       // matches .row-cards top
+  /* getBoundingClientRect returns post-transform pixels; divide by currentScale
+     to convert back to the stage's unscaled local coords used by style.left/top. */
+  const SB_LEFT = (rowRect.left - stageRect.left) / currentScale + 15; // matches .row-cards left
+  const SB_TOP  = (rowRect.top  - stageRect.top)  / currentScale;       // matches .row-cards top
   cards.forEach((c, i) => {
     if (!c.el) return;
     c.el.style.zIndex = 50; // above block-overlay (20) during flight
@@ -1209,6 +1219,23 @@ document.addEventListener('keydown', e => {
   const n = parseInt(e.key, 10);
   if (n >= 1 && n <= NUM_COLUMNS) gameColumnClicked(n - 1);
 });
+
+/* scale-to-fit: #wrap is 800x570 (banner 40 + stage 530). Compute the largest
+   uniform scale that fits the visible viewport (visualViewport handles iOS
+   Safari's collapsing URL bar correctly; fall back to innerWidth/Height). */
+let currentScale = 1;
+function fitToViewport() {
+  const vv = window.visualViewport;
+  const w = vv ? vv.width  : window.innerWidth;
+  const h = vv ? vv.height : window.innerHeight;
+  /* cap at 1 so desktop renders at native 800x570 instead of upscaling. */
+  currentScale = Math.min(w / 800, h / 570, 1);
+  document.documentElement.style.setProperty('--fit-scale', currentScale);
+}
+window.addEventListener('resize', fitToViewport);
+window.addEventListener('orientationchange', fitToViewport);
+if (window.visualViewport) window.visualViewport.addEventListener('resize', fitToViewport);
+fitToViewport();
 
 /* boot */
 buildColumns();
