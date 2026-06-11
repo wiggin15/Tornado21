@@ -24,8 +24,40 @@ body {
   background: #f4eec0;          /* lighter cream — same family as game olive, but parchment-bright */
   border: 2px solid #484830;
   border-radius: 6px;
-  padding: 18px 28px 22px;
+  padding: 18px 28px 44px;      /* extra bottom padding leaves room for the corner button */
   box-shadow: 0 0 40px rgba(0,0,0,.6);
+  position: relative;
+}
+
+/* In-game button look — mirrors index.html .btn (cream face, black ring, cream
+   highlight ring, bevel via inset shadows). */
+.ingame-btn {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  background: #cacf94;
+  color: #000;
+  border: 0;
+  border-radius: 3px;
+  font: 12px "Trebuchet MS", Tahoma, sans-serif;
+  height: 22px;
+  line-height: 22px;
+  padding: 0 10px;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow:
+    inset 1px 1px 0 #fff,
+    inset -1px -1px 0 #989965,
+    0 0 0 1px #000,
+    0 0 0 2px #cacf94;
+}
+.ingame-btn:hover { background: #d5d8a7; }
+.ingame-btn:active {
+  box-shadow:
+    inset 1px 1px 0 #989965,
+    inset -1px -1px 0 #fff,
+    0 0 0 1px #000,
+    0 0 0 2px #cacf94;
 }
 
 h1 {
@@ -140,6 +172,8 @@ b { font-weight: bold; }
     Only one joker is added per play, even if more than one rule triggers at the same time.
     Other rewards on the same play are not affected: a clear that also completes a Lesser or Greater Straight will still add the 5 spade gold cards on top of the joker.
   </div>
+
+  <a class="ingame-btn" href="tornado21_goldrush.html">Learn about Goldrush</a>
 
 </div>
 

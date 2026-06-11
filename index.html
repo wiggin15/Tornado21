@@ -124,12 +124,16 @@ body { margin: 0; height: 100dvh; display: flex; align-items: center; justify-co
   color: rgba(72,72,48,.55);        /* palette[26] frame_color, faded */
   pointer-events: none;
 }
-.column:hover:not(.blocked) {
-  border-color: #ffffce;            /* palette[30] */
-  background: #696944;              /* palette[25] */
-}
-.column:hover:not(.blocked)::before {
-  border-color: #ffffce;            /* match hover frame_color */
+/* Gate hover on (hover: hover) so touch devices don't keep the tapped
+   column stuck in the highlighted state after a click. */
+@media (hover: hover) {
+  .column:hover:not(.blocked) {
+    border-color: #ffffce;            /* palette[30] */
+    background: #696944;              /* palette[25] */
+  }
+  .column:hover:not(.blocked)::before {
+    border-color: #ffffce;            /* match hover frame_color */
+  }
 }
 .column.blocked { cursor: not-allowed; }
 .column.blocked .block-overlay { display: block; }
@@ -405,6 +409,17 @@ body { margin: 0; height: 100dvh; display: flex; align-items: center; justify-co
 #howto-overlay .dialog ul li.bullet::before {
   background: #143258;
 }
+/* Easter-egg link to the bonuses reference page */
+#howto-overlay .dialog .more-link {
+  position: absolute;
+  right: 8px;
+  bottom: 4px;
+  font-size: 10px;
+  line-height: 1;
+  color: #6d9bc4;
+  text-decoration: none;
+  opacity: .55;
+}
 .dialog h2 {
   text-align: center;
   font-size: 22px;
@@ -558,6 +573,7 @@ body { margin: 0; height: 100dvh; display: flex; align-items: center; justify-co
       <div class="dialog-actions">
         <button id="btn-play" class="btn btn-blue">Play Now</button>
       </div>
+      <a class="more-link" href="tornado21_bonuses.html" target="_blank" rel="noopener" aria-label="More">.</a>
     </div>
   </div>
 
@@ -1228,8 +1244,13 @@ function fitToViewport() {
   const vv = window.visualViewport;
   const w = vv ? vv.width  : window.innerWidth;
   const h = vv ? vv.height : window.innerHeight;
+  /* Subtract body's safe-area padding so the scaled wrap stays clear of
+     iPhone landscape notches (otherwise the title banner gets clipped). */
+  const cs = getComputedStyle(document.body);
+  const padX = parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight);
+  const padY = parseFloat(cs.paddingTop)  + parseFloat(cs.paddingBottom);
   /* cap at 1 so desktop renders at native 800x570 instead of upscaling. */
-  currentScale = Math.min(w / 800, h / 570, 1);
+  currentScale = Math.min((w - padX) / 800, (h - padY) / 570, 1);
   document.documentElement.style.setProperty('--fit-scale', currentScale);
 }
 window.addEventListener('resize', fitToViewport);
