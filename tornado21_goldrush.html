@@ -5,10 +5,15 @@
 <title>Tornado 21 — Goldrush</title>
 <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAABD0lEQVR42rWV0Q3DIAxEjygbOTPZM9kzxTPRj0JLMEmJlCLxQQTHs33ByFkzgEdnzppTWSBnxRMjJQEALE+KtloL/jTWQwg03kSTYvuuUbiGkDYBd0pMgHlcMwFiABHCmVSqePy4yTQpEaCqoYDrsAC7Hi5oaVpa8yh6SXxG710UygCxDi330xWV3gstlal8zPtt4p4cE9RTxD15LVilFgNEJOy/FHYDJEkQNwfc36LK47OXwiYCYoaJB1+3xFPCLWEtWriwIR75OAhLehO24uQeClh9rXzu45gK959+bt2wlVxsXU4+drMLU4oZCN83wcGne5kJKcncn8d0HvLZY7/e8e+dsbTt5MnWhH810xcp7bbuPGM/FQAAAABJRU5ErkJggg==">
 <style>
+:root {
+  /* iOS Safari ships Trebuchet MS but not Tahoma — keep both as fallbacks so
+     the page doesn't drop to a serif default on iPhone/iPad. */
+  --ui-font: "Trebuchet MS", Tahoma, sans-serif;
+}
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body {
   background: #2a2a2a;
-  font-family: "Trebuchet MS", Tahoma, sans-serif;
+  font-family: var(--ui-font);
   color: #1a1a10;
 }
 body {
@@ -29,21 +34,21 @@ body {
 }
 
 h1 {
-  font: bold 20px Tahoma;
+  font: bold 20px var(--ui-font);
   text-align: center;
   margin-bottom: 4px;
   color: #2a2a1a;
 }
 
 .lede {
-  font: italic 12.5px Tahoma;
+  font: italic 12.5px var(--ui-font);
   text-align: center;
   color: #6a5a20;
   margin-bottom: 12px;
 }
 
 h2 {
-  font: bold 12px Tahoma;
+  font: bold 12px var(--ui-font);
   text-transform: uppercase;
   letter-spacing: 1.4px;
   color: #6a5a20;
@@ -54,13 +59,13 @@ h2 {
 h2:first-of-type { margin-top: 6px; }
 
 h3 {
-  font: bold 12.5px Tahoma;
+  font: bold 12.5px var(--ui-font);
   color: #2a2a1a;
   margin: 10px 0 3px;
 }
 
 p, ol, ul {
-  font: 12.5px Tahoma;
+  font: 12.5px var(--ui-font);
   line-height: 1.6;
   color: #1a1a10;
 }
@@ -71,7 +76,7 @@ li + li { margin-top: 2px; }
 .intro p + p { margin-top: 6px; }
 
 .notes {
-  font: italic 11px Tahoma;
+  font: italic 11px var(--ui-font);
   color: #6a6a4a;
   margin-top: 6px;
   line-height: 1.55;
@@ -87,7 +92,7 @@ em { font-style: italic; }
   margin-top: 4px;
 }
 .stage .why {
-  font: italic 11.5px Tahoma;
+  font: italic 11.5px var(--ui-font);
   color: #6a5300;
   margin: 2px 0 4px;
 }
@@ -104,14 +109,14 @@ em { font-style: italic; }
   border-radius: 4px;
   padding: 8px 12px;
   margin: 8px 0 4px;
-  font: 12px Tahoma;
+  font: 12px var(--ui-font);
   line-height: 1.55;
   color: #1a1a10;
 }
 .glossary b { color: #4a3a00; }
-.glossary .term { font: bold 11px Tahoma; text-transform: uppercase; letter-spacing: 1px; color: #6a5a20; display: block; margin-bottom: 4px; }
+.glossary .term { font: bold 11px var(--ui-font); text-transform: uppercase; letter-spacing: 1px; color: #6a5a20; display: block; margin-bottom: 4px; }
 .case .when {
-  font: bold 11.5px Tahoma;
+  font: bold 11.5px var(--ui-font);
   color: #6a5a20;
   text-transform: uppercase;
   letter-spacing: .8px;
